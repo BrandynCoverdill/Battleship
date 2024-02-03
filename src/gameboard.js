@@ -2,44 +2,50 @@ import Ship from './ship';
 
 // gameboard size is 10x10
 class Gameboard {
-	constructor(carrier, battleship, cruiser, submarine, destroyer) {
+	constructor(
+		carrierPos,
+		battleshipPos,
+		cruiserPos,
+		submarinePos,
+		destroyerPos
+	) {
 		// Create Ships for a player's gameboard and track their position.
 		this.carrier = new Ship(5, 0, false);
-		this.carrier.x = carrier.x;
-		this.carrier.y = carrier.y;
-		this.carrier.isVertical = carrier.isVertical;
+		this.carrier.x = carrierPos.x;
+		this.carrier.y = carrierPos.y;
+		this.carrier.isVertical = carrierPos.isVertical;
 
 		this.battleship = new Ship(4, 0, false);
-		this.battleship.x = battleship.x;
-		this.battleship.y = battleship.y;
-		this.battleship.isVertical = battleship.isVertical;
+		this.battleship.x = battleshipPos.x;
+		this.battleship.y = battleshipPos.y;
+		this.battleship.isVertical = battleshipPos.isVertical;
 
 		this.cruiser = new Ship(3, 0, false);
-		this.cruiser.x = cruiser.x;
-		this.cruiser.y = cruiser.y;
-		this.cruiser.isVertical = cruiser.isVertical;
+		this.cruiser.x = cruiserPos.x;
+		this.cruiser.y = cruiserPos.y;
+		this.cruiser.isVertical = cruiserPos.isVertical;
 
 		this.submarine = new Ship(3, 0, false);
-		this.submarine.x = submarine.x;
-		this.submarine.y = submarine.y;
-		this.submarine.isVertical = submarine.isVertical;
+		this.submarine.x = submarinePos.x;
+		this.submarine.y = submarinePos.y;
+		this.submarine.isVertical = submarinePos.isVertical;
 
 		this.destroyer = new Ship(2, 0, false);
-		this.destroyer.x = destroyer.x;
-		this.destroyer.y = destroyer.y;
-		this.destroyer.isVertical = destroyer.isVertical;
+		this.destroyer.x = destroyerPos.x;
+		this.destroyer.y = destroyerPos.y;
+		this.destroyer.isVertical = destroyerPos.isVertical;
 
 		// Keep track of all missed attacks
-		let missedAttacks = {};
+		this.missedAttacks = [];
 
 		// Keep track of the number of ships that have been sunk for this object
-		let downedShips = 0;
+		this.downedShips = 0;
 	}
 
 	// determine if the opposing player has hit one of their ships
 	receiveAttack(pos) {
-		// If the carrier is vertical
 		if (
+			// If the carrier is vertical
 			this.carrier.isVertical &&
 			this.carrier.x === pos.x &&
 			this.carrier.y >= pos.y &&
@@ -52,11 +58,11 @@ class Gameboard {
 			this.carrier.checkHitsToSink();
 
 			// if the ship has sunk, update the downedShips total
-			// TODO: figure this out later when testing
-		}
-
-		// If the carrier is horizontal
-		if (
+			if (this.carrier.isSunk) {
+				this.downedShips += 1;
+			}
+		} else if (
+			// If the carrier is horizontal
 			!this.carrier.isVertical &&
 			this.carrier.y === pos.y &&
 			this.carrier.x <= pos.x &&
@@ -69,11 +75,11 @@ class Gameboard {
 			this.carrier.checkHitsToSink();
 
 			// if the ship has sunk, update the downedShips total
-			// TODO: figure this out later when testing
-		}
-
-		// If the battleship is vertical
-		if (
+			if (this.carrier.isSunk) {
+				this.downedShips += 1;
+			}
+		} else if (
+			// If the battleship is vertical
 			this.battleship.isVertical &&
 			this.battleship.x === pos.x &&
 			this.battleship.y >= pos.y &&
@@ -86,11 +92,11 @@ class Gameboard {
 			this.battleship.checkHitsToSink();
 
 			// if the ship has sunk, update the downedShips total
-			// TODO: figure this out later when testing
-		}
-
-		// If the battleship is horizontal
-		if (
+			if (this.battleship.isSunk) {
+				this.downedShips += 1;
+			}
+		} else if (
+			// If the battleship is horizontal
 			!this.battleship.isVertical &&
 			this.battleship.y === pos.y &&
 			this.battleship.x <= pos.x &&
@@ -103,11 +109,11 @@ class Gameboard {
 			this.battleship.checkHitsToSink();
 
 			// if the ship has sunk, update the downedShips total
-			// TODO: figure this out later when testing
-		}
-
-		// If the cruiser is vertical
-		if (
+			if (this.battleship.isSunk) {
+				this.downedShips += 1;
+			}
+		} else if (
+			// If the cruiser is vertical
 			this.cruiser.isVertical &&
 			this.cruiser.x === pos.x &&
 			this.cruiser.y >= pos.y &&
@@ -120,11 +126,11 @@ class Gameboard {
 			this.cruiser.checkHitsToSink();
 
 			// if the ship has sunk, update the downedShips total
-			// TODO: figure this out later when testing
-		}
-
-		// If the cruiser is horizontal
-		if (
+			if (this.cruiser.isSunk) {
+				this.downedShips += 1;
+			}
+		} else if (
+			// If the cruiser is horizontal
 			!this.cruiser.isVertical &&
 			this.cruiser.y === pos.y &&
 			this.cruiser.x <= pos.x &&
@@ -137,11 +143,11 @@ class Gameboard {
 			this.cruiser.checkHitsToSink();
 
 			// if the ship has sunk, update the downedShips total
-			// TODO: figure this out later when testing
-		}
-
-		// If the submarine is vertical
-		if (
+			if (this.cruiser.isSunk) {
+				this.downedShips += 1;
+			}
+		} else if (
+			// If the submarine is vertical
 			this.submarine.isVertical &&
 			this.submarine.x === pos.x &&
 			this.submarine.y >= pos.y &&
@@ -154,11 +160,11 @@ class Gameboard {
 			this.submarine.checkHitsToSink();
 
 			// if the ship has sunk, update the downedShips total
-			// TODO: figure this out later when testing
-		}
-
-		// If the submarine is horizontal
-		if (
+			if (this.submarine.isSunk) {
+				this.downedShips += 1;
+			}
+		} else if (
+			// If the submarine is horizontal
 			!this.submarine.isVertical &&
 			this.submarine.y === pos.y &&
 			this.submarine.x <= pos.x &&
@@ -171,11 +177,11 @@ class Gameboard {
 			this.submarine.checkHitsToSink();
 
 			// if the ship has sunk, update the downedShips total
-			// TODO: figure this out later when testing
-		}
-
-		// If the destroyer is vertical
-		if (
+			if (this.submarine.isSunk) {
+				this.downedShips += 1;
+			}
+		} else if (
+			// If the destroyer is vertical
 			this.destroyer.isVertical &&
 			this.destroyer.x === pos.x &&
 			this.destroyer.y >= pos.y &&
@@ -188,11 +194,11 @@ class Gameboard {
 			this.destroyer.checkHitsToSink();
 
 			// if the ship has sunk, update the downedShips total
-			// TODO: figure this out later when testing
-		}
-
-		// If the destroyer is horizontal
-		if (
+			if (this.destroyer.isSunk) {
+				this.downedShips += 1;
+			}
+		} else if (
+			// If the destroyer is horizontal
 			!this.destroyer.isVertical &&
 			this.destroyer.y === pos.y &&
 			this.destroyer.x <= pos.x &&
@@ -205,8 +211,20 @@ class Gameboard {
 			this.destroyer.checkHitsToSink();
 
 			// if the ship has sunk, update the downedShips total
-			// TODO: figure this out later when testing
+			if (this.destroyer.isSunk) {
+				this.downedShips += 1;
+			}
+		} else {
+			// Record the missed attack
+			this.missedAttacks.push([pos.x, pos.y]);
 		}
+	}
+
+	checkIfAllShipsSunk() {
+		if (this.downedShips === 5) {
+			return true;
+		}
+		return false;
 	}
 }
 
