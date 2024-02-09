@@ -25,7 +25,7 @@ class User {
 	// Player method that lets the user choose a spot on the grid to attack
 	// TODO: May not need this method (don't understand TOP step 3.1)
 	playerAttack(xCord, yCord) {
-		return { x: xCord, y: yCord };
+		return {x: xCord, y: yCord};
 	}
 
 	// Computer method that randomly chooses a spot on the gameboard to attack
